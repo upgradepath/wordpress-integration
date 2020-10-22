@@ -1,0 +1,74 @@
+version: '3.6'
+
+networks:
+  frontend:
+    external:
+      name: reverse-proxy-docker-traefik_routing
+  backend:
+    driver: bridge
+
+services:
+
+  wordpress:
+    build:
+      context: ..
+      dockerfile: docker/wordpress/Dockerfile
+    user: "33:33"
+    volumes:
+      - code:/var/www/html
+      - ..:/var/www/html/wp-content/plugins/upgradepath
+    environment:
+      WORDPRESS_DB_NAME: ${COMPOSE_PROJECT_NAME}
+      WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}
+      WORDPRESS_DB_USER: ${DATABASE_USER}
+      WORDPRESS_DB_PASSWORD: ${DATABASE_PASSWORD}
+      WORDPRESS_TABLE_PREFIX: ${WORDPRESS_TABLE_PREFIX}
+      WORDPRESS_DEBUG: 1
+      WORDPRESS_CONFIG_EXTRA: |
+          /* Extra config docker */
+          define('UPGRADEPATH_API_URL', 'http://upgradepath.test/api/');
+    depends_on:
+      - mysql
+    networks:
+      - frontend
+      - backend
+    extra_hosts:
+      - "upgradepath.test:10.100.100.10"
+      - "wordpress.upgradepath.test:10.100.100.10"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=reverse-proxy-docker-traefik_routing"
+      # http
+      - "traefik.http.routers.upgradepath-wordpress.rule=Host(`wordpress.upgradepath.test`)"
+      - "traefik.http.routers.upgradepath-wordpress.entrypoints=web"
+      - "traefik.http.services.upgradepath-wordpress.loadbalancer.server.port=80"
+    sysctls:
+      net.ipv4.ip_unprivileged_port_start: 0
+#    ports:
+#      - 8080:80
+
+  workspace:
+    build:
+      context: ..
+      dockerfile: docker/workspace/Dockerfile
+    volumes:
+      - ..:/usr/src/app
+    networks:
+      - frontend
+      - backend
+
+  mysql:
+    image: mariadb:latest
+    volumes:
+     - mysql:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=${DATABASE_USER}
+      - MYSQL_PASSWORD=${DATABASE_PASSWORD}
+      - MYSQL_DATABASE=${COMPOSE_PROJECT_NAME}
+    networks:
+      - backend
+
+volumes:
+  code:
+  mysql:

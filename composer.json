@@ -1,0 +1,24 @@
+{
+  "name": "upgradepath/wordpress-integration",
+  "description": "The UpgradePath wordpress integration sends plugin meta information to UpgradePath so that you can easily manage your software versions in one central place.",
+  "homepage": "https://github.com/upgradepath/wordpress-integration",
+  "type": "wordpress-plugin",
+  "license": "GPL-3.0-or-later",
+  "authors": [
+  ],
+  "require": {
+    "php": ">=7.0",
+    "ext-json": "*"
+  },
+  "require-dev": {
+    "friendsofphp/php-cs-fixer": "^2.16"
+  },
+  "scripts": {
+    "fix": "./vendor/bin/php-cs-fixer fix"
+  },
+  "autoload": {
+    "psr-4": {
+      "Upgradepath\\": "src/"
+    }
+  }
+}
