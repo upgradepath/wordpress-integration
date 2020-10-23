@@ -13,6 +13,9 @@ jobs:
         run: |
           composer install --no-dev
           composer dump-autoload -o
+          git config --global user.email "10upbot+github@10up.com"
+          git config --global user.name "10upbot on GitHub"
+          git add -f vendor && git commit -m "Add composer dependencies"
       - name: WordPress Plugin Deploy
         id: deploy
         uses: 10up/action-wordpress-plugin-deploy@stable
@@ -22,12 +25,3 @@ jobs:
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
           SLUG: ${{ secrets.WORDPRESS_SLUG }}
-      - name: Upload release asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ${{github.workspace}}/${{ github.event.repository.name }}.zip
-          asset_name: ${{ github.event.repository.name }}.zip
-          asset_content_type: application/zip
