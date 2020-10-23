@@ -6,7 +6,7 @@ Tags: update, upgrade, up-to-date, automation, plugins
 Requires at least: 5.0
 Tested up to: 5.5
 Requires PHP: 7.0
-Stable tag: trunk
+Stable tag: 0.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,7 +14,7 @@ The UpgradePath wordpress integration sends plugin meta information to UpgradePa
 
 == Description ==
 
-To use this plugin you will first need an UpgradePath account. UpgradePath is a platform that helps developers and sysadmins with managing the versions of software.
+To use this plugin you will first need an UpgradePath account. UpgradePath is a platform that helps developers and sysadmins with software version management.
 
 == Installation ==
 
@@ -37,8 +37,8 @@ After the initial sync during the setup, every day and when you install or updat
 
 = What meta information are you sending to UpgradePath? =
 
- * Plugin slug
- * Version tag
+* Plugin slug
+* Version tag
 
 = Does this plugin work if the wordpress instance is not publicly accessible? (f.e. basic auth protected or locally installed) =
 
@@ -54,6 +54,16 @@ This is why the WordPress instance only needs internet access.
 = 0.0.1 =
 * Initial release
 
+= 0.0.2 =
+* Bugfixes
+
+= 0.0.3 =
+* Fixed release
+
 == Upgrade Notice ==
 
 = 0.0.1 =
+
+= 0.0.2 =
+
+= 0.0.3 =

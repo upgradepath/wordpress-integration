@@ -10,7 +10,7 @@
  * @wordpress-plugin
  * Plugin Name:       UpgradePath
  * Description:       The UpgradePath wordpress integration sends plugin meta information to UpgradePath so that you can easily manage your software versions in one central place.
- * Version:           0.0.1
+ * Version:           0.0.3
  * Requires at least: 5.1
  * Requires PHP:      7.0
  * Author:            UpgradePath
